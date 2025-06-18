@@ -4,7 +4,7 @@ A robust macOS utility to fix permissions and remove Gatekeeper quarantine attri
 
 ## What It Does
 
-- **run.sh** is the entry point. It:
+- **run.command** is the entry point. It:
   - Creates a backup of the entire `chmod-gatekeeper` folder (as `backup.zip` inside that folder).
   - Checks for and applies updates from GitHub.
   - Launches the main script for permission and quarantine fixes.
@@ -26,10 +26,10 @@ After downloading, you will have a folder named `chmod-gatekeeper` containing al
 
 - Ensure you have a macOS system with Terminal access.
 - Make the script executable (only needed once):
-  - Open Terminal and navigate to the directory where `run.sh` is located, then run:
+  - Open Terminal and navigate to the directory where `run.command` is located, then run:
 
    ```sh
-   chmod +x run.sh
+   chmod +x run.command
    ```
 
 ### How to Run
@@ -37,7 +37,7 @@ After downloading, you will have a folder named `chmod-gatekeeper` containing al
 - Double-click or run the following command from the `chmod-gatekeeper` directory:
 
    ```sh
-   ./run.sh
+   ./run.command
    ```
 
 - Follow the prompts in Terminal.
