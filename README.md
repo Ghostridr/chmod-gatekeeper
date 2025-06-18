@@ -4,15 +4,12 @@ A robust macOS utility to fix permissions and remove Gatekeeper quarantine attri
 
 ## What It Does
 
-The `Perms_&_GateKeeper.command` script:
-
-- Changes to the parent directory (so you can keep it in a `chmod-gatekeeper` subfolder and operate on the whole project or downloads folder).
-- Sources color and formatting functions from `mac/color/colors.sh` for visually clear output.
-- Prompts the user with a color-coded, clearly formatted warning and asks for confirmation before making any changes.
-- Recursively sets read, write, and execute permissions (`a+rwx`) on all files and directories under the current directory, tracking which succeeded and which failed.
-- Recursively removes the macOS Gatekeeper quarantine flag (`com.apple.quarantine`) from all `.app` bundles, tracking which succeeded and which failed.
-- Provides a color-coded, underlined summary of how many files and apps were processed, and lists which ones succeeded or failed for both permissions and quarantine removal.
-- Waits for you to press Enter before closing, so you can review the results.
+- **run.sh** is the entry point. It:
+  - Creates a backup of the entire `chmod-gatekeeper` folder (as `backup.zip` inside that folder).
+  - Checks for and applies updates from GitHub.
+  - Launches the main script for permission and quarantine fixes.
+- **Perms_&_GateKeeper.command** handles the core logic: it prompts for confirmation, then recursively sets permissions and removes quarantine attributes from all `.app` bundles in the directory just outside `chmod-gatekeeper`.
+- All output is color-coded and user-friendly.
 
 ## Getting Started
 
@@ -25,36 +22,25 @@ After downloading, you will have a folder named `chmod-gatekeeper` containing al
 
 ## Usage
 
-You can run the script in two ways: from the Terminal or using a Finder shortcut. The recommended method is to use the Finder shortcut for ease of use.
-
 ### Prerequisites
 
 - Ensure you have a macOS system with Terminal access.
 - Make the script executable (only needed once):
-  - Open Terminal and navigate to the directory where the script is located, then run:
+  - Open Terminal and navigate to the directory where `run.sh` is located, then run:
 
    ```sh
-   chmod +x ./mac/Perms_\&\_GateKeeper.command
+   chmod +x run.sh
    ```
 
-  - This step is required for both Terminal and Shortcut (Finder) usage.
+### How to Run
 
-### Option 1: Use the Shortcut (Finder) — Recommended
-
-- A shortcut named `Perms & GateKeeper` is provided in the main directory for convenience.
-- You can double-click this shortcut in Finder to launch the script without opening Terminal directly.
-- You may still be prompted for your password in a Terminal window, and all output will be shown there.
-- This is the easiest and most user-friendly way to run the script.
-
-### Option 2: Run from Terminal
-
-- Run the script from Terminal:
+- Double-click or run the following command from the `chmod-gatekeeper` directory:
 
    ```sh
-   ./mac/Perms_\&\_GateKeeper.command
+   ./run.sh
    ```
 
-- Review the color-coded summary and lists of successes and failures. Press Enter to exit when done.
+- Follow the prompts in Terminal.
 
 ## Output Details
 
@@ -65,7 +51,8 @@ You can run the script in two ways: from the Terminal or using a Finder shortcut
 
 ## Notes
 
-- The script must be run from the parent directory of the `chmod-gatekeeper` folder (it does this automatically).
-- It will apply permissions and remove quarantine attributes recursively to all files and subdirectories.
+- The script will operate on the directory just outside `chmod-gatekeeper` (the folder you placed it in).
+- It will apply permissions and remove quarantine attributes recursively to all files and subdirectories in that directory.
 - Use with caution: it grants full access to all files in the directory tree.
 - You may be prompted for your password to allow the script to remove quarantine attributes from `.app` bundles.
+- The backup is stored as `backup.zip` inside the `chmod-gatekeeper` folder before any changes or updates are made.

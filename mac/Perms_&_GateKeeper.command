@@ -5,29 +5,10 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 PARENT_DIR="$(cd "$ROOT_DIR/.." && pwd)"
 
-# Create a backup of the current chmod-gatekeeper directory before updating
-BACKUP_FILE="$ROOT_DIR/backup.zip"
-echo "Creating backup at $BACKUP_FILE ..."
-cd "$ROOT_DIR" || { echo "Failed to change to root directory for backup."; exit 1; }
-zip -r -q "$BACKUP_FILE" . -x "./backup.zip"
-
-# Make update and color scripts executable
-chmod +x "$ROOT_DIR/mac/update/auto-update.sh"
-chmod +x "$ROOT_DIR/mac/color/colors.sh"
-
-# Run auto-update.sh before anything else
-echo " "
-echo "Checking for updates..."
-"$ROOT_DIR/mac/update/auto-update.sh"
-
 # Source colors and print functions
 source "$ROOT_DIR/mac/color/colors.sh"
 
 # Change to the directory just outside chmod-gatekeeper (the parent of ROOT_DIR)
-echo " "
-print_line "$BOLD_CYAN" "Changing to the parent directory of chmod-gatekeeper"
-print_line "$BOLD_CYAN" "=========================================================="
-print_line " "
 cd "$PARENT_DIR" || { print_line "$RED" "Failed to change to target directory outside chmod-gatekeeper."; exit 1; }
 print_line "$CYAN" "Now operating in: ${RESET}${WHITE}$PWD${CYAN}"
 
@@ -36,13 +17,14 @@ print_line " "
 print_line "$BOLD_CYAN" "Setting Permissions and Removing Gatekeeper Quarantine Attributes"
 print_line "$BOLD_CYAN" "=========================================================="
 print_line " "
-print_line "$CYAN" "This will recursively set permissions and remove quarantine attributes from all .app bundles in: ${RESET}${WHITE}$PWD${CYAN}"
-print_line "$RED" "Are you sure you want to continue? [Y/N] "
+print_line "$RED" "This will recursively set permissions and remove quarantine attributes from all .app bundles in: ${RESET}${WHITE}$PWD${RED}"
+print_line "$Bold_RED" "Are you sure you want to continue? [Y/N] "
 read confirm
 if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
   print_line "$YELLOW" "Aborted."
   print_line "$CYAN" "\nPress Enter to exit..."
   read _
+  exit 0
 fi
 
 # Collect files and .app bundles for summary

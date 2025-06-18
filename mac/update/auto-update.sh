@@ -20,8 +20,8 @@ unzip -q "$TMP_DIR/update.zip" -d "$TMP_DIR"
 # Find the extracted folder (it will be named like repo-branch)
 EXTRACTED_DIR=$(find "$TMP_DIR" -type d -name "chmod-gatekeeper-*" | head -n 1)
 
-# Copy all files from the extracted folder to the root, overwriting existing files
-rsync -a --delete --exclude 'mac/update/auto-update.sh' "$EXTRACTED_DIR/" "$ROOT_DIR/"
+# Copy all files from the extracted folder to the root, overwriting existing files, but do NOT delete files in the root
+rsync -a --exclude 'mac/update/auto-update.sh' "$EXTRACTED_DIR/" "$ROOT_DIR/"
 
 echo "Update complete."
 
