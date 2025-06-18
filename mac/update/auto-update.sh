@@ -2,7 +2,7 @@
 
 # Set your GitHub repo (replace with your actual repo)
 REPO_URL="https://github.com/Ghostridr/chmod-gatekeeper"
-BRANCH="main" # or "master" or your default branch
+BRANCH="Main" # Use the correct branch name with case sensitivity
 
 # Get the directory of this script (assumed to be in mac/update/)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -14,7 +14,7 @@ echo "Downloading latest update from $REPO_URL..."
 
 # Download and extract the latest version to a temp directory
 TMP_DIR=$(mktemp -d)
-curl -L "$REPO_URL/archive/$BRANCH.zip" -o "$TMP_DIR/update.zip"
+curl -L "$REPO_URL/archive/refs/heads/$BRANCH.zip" -o "$TMP_DIR/update.zip"
 unzip -q "$TMP_DIR/update.zip" -d "$TMP_DIR"
 
 # Find the extracted folder (it will be named like repo-branch)
